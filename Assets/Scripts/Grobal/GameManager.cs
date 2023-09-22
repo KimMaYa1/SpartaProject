@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
         uiManager.GoldUIUpdate();
         uiManager.StatUIUpdate();
         uiManager.InventoryCountUpdate();
+        uiManager.PageUIUpdate();
+        uiManager.InventoryUIUpdate();
     }
 
     private void Update()

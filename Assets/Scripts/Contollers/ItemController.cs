@@ -8,12 +8,8 @@ public class ItemController : MonoBehaviour
     private DefaultStats classification;
     private PlayerController player;
     private GameManager gameManager;
-    public Image itemImage;
+    public Sprite itemImage;
 
-    private void Awake()
-    {
-        itemImage = GetComponent<Image>();
-    }
 
     private void Start()
     {

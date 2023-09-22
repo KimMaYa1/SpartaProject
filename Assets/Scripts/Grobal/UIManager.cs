@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI pageText;
     [SerializeField] private Text nameText;
     [SerializeField] private Text infoText;
     [SerializeField] private Text titleText;
@@ -26,18 +27,27 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject closeButton;
     [SerializeField] private GameObject statusWindow;
     [SerializeField] private GameObject inventoryWindow;
+    [SerializeField] private Button nextButton;
+    [SerializeField] private Button backButton;
+    [SerializeField] private List<GameObject> inventory;
+    [SerializeField] private Sprite nullImage;
 
     private GameManager gameManager;
     private PlayerController player;
+    private int page;
+
 
     private void Awake()
     {
+        page = 1;
         gameManager = GameManager.instance;
         player = gameManager.mainPlayer.GetComponent<PlayerController>();
     }
 
     private void Start()
     {
+        nextButton.onClick.AddListener(OnNextButton);
+        backButton.onClick.AddListener(OnBackButton);
         statusButton.GetComponentInChildren<Button>().onClick.AddListener(OnstatusButton);
         inventoryButton.GetComponentInChildren<Button>().onClick.AddListener(OninventoryButton);
         closeButton.GetComponentInChildren<Button>().onClick.AddListener(CloseWindow);
@@ -69,7 +79,7 @@ public class UIManager : MonoBehaviour
 
     public void InventoryCountUpdate()
     {
-        myInventoryCountText.text = $"{player.itemControllers.Count}";
+        myInventoryCountText.text = $"{player.inventory.Count}";
         maxInventoryCountText.text = "/ 117";
     }
 
@@ -116,5 +126,51 @@ public class UIManager : MonoBehaviour
 
         closeButton.SetActive(false);
         ButtonsChangeActive();
+    }
+
+    public void InventoryUIUpdate()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            inventory[i].GetComponent<Image>().sprite = nullImage;
+        }
+        if (player.inventory.Any())
+        {
+            for (int i = 9 * (page - 1); i < 9; i++)
+            {
+                if (i > player.inventory.Count-1)
+                {
+                    break;
+                }
+                if (player.inventory[i] != null)
+                {
+                    inventory[i].GetComponent<Image>().sprite = player.inventory[i].itemImage;
+                }
+            }
+        }
+    }
+
+    private void OnNextButton()
+    {
+        if (page < 13)
+        {
+            page++;
+            PageUIUpdate();
+        }
+    }
+
+    private void OnBackButton()
+    {
+        if(page > 1)
+        {
+            page--;
+            PageUIUpdate();
+        }
+    }
+
+    public void PageUIUpdate()
+    {
+        pageText.text = $"{page}/13";
+        InventoryUIUpdate();
     }
 }

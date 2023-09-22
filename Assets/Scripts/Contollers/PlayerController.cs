@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class PlayerController : MonoBehaviour
 {
     public CharacterStat baseStat;
     UIManager uIManager;
-    public List<ItemController> itemControllers = new List<ItemController>(117);
+    public List<ItemController> inventory = new List<ItemController>();
 
     private void Awake()
     {

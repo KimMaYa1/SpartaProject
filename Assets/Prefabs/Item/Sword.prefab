@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   performance: 5
-  itemImage: {fileID: 0}
+  itemImage: {fileID: -267587109, guid: 6eb16e372762d6b4cb708c44ebfab931, type: 3}
 --- !u!1 &7543692724693712173
 GameObject:
   m_ObjectHideFlags: 0
