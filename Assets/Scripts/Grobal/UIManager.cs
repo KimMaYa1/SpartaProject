@@ -136,7 +136,7 @@ public class UIManager : MonoBehaviour
         }
         if (player.inventory.Any())
         {
-            for (int i = 9 * (page - 1); i < 9; i++)
+            for (int i = 9 * (page - 1); i < 9 * page; i++)
             {
                 if (i > player.inventory.Count-1)
                 {
@@ -144,7 +144,8 @@ public class UIManager : MonoBehaviour
                 }
                 if (player.inventory[i] != null)
                 {
-                    inventory[i].GetComponent<Image>().sprite = player.inventory[i].itemImage;
+                    int j = i % 9;
+                    inventory[j].GetComponent<Image>().sprite = player.inventory[i].itemImage;
                 }
             }
         }
